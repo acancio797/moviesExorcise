@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "100401401739",
+    "project_id": "movie-26ded",
+    "storage_bucket": "movie-26ded.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100401401739:android:597e10f5979f53df81e98e",
+        "android_client_info": {
+          "package_name": "com.exorcise.movie"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvEm4ymycCXW-6QoPhOkDPk2sr-aK87kg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
