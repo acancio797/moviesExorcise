@@ -1,13 +1,19 @@
 package com.exorcise.movie.utils
 
+import com.exorcise.movie.model.MapPoint
 import com.exorcise.movie.model.MovieGeolocation
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.GeoPoint
 
-fun MovieGeolocation.toMap(): Map<String, Any> {
+fun MapPoint.toMap(): Map<String, Any> {
 
     return mapOf(
-        "idMovie" to this.idMovie,
-        "image" to this.image,
-        "position" to (this.position ?: GeoPoint(0.0, 0.0))
+        "id" to this.id,
+        "time" to this.time!!,
+        "position" to this.position.toGeoPoint()
     )
+}
+
+fun LatLng.toGeoPoint(): GeoPoint {
+    return GeoPoint(this.latitude, this.longitude)
 }

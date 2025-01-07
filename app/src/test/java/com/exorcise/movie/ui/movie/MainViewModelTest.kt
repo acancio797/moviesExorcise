@@ -41,7 +41,7 @@ class MainViewModelTest: BaseViewModelTest() {
 
         val homeViewModel = MovieViewModel(mockMoviesRepo)
 
-        val state = homeViewModel.uiState.value as? HomeUiState.HasMovies
+        val state = homeViewModel.uiState.value as? MovieUiState.HasMovies
         assertNotNull("Current state not expected", state)
         assertEquals(expected, state?.moviesFeed)
         assertEquals(emptyList<String>(), state?.errorMessages)

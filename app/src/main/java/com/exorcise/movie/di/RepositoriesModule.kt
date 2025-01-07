@@ -3,6 +3,8 @@ package com.exorcise.movie.di
 import com.exorcise.movie.data.configuration.ConfigurationRemoteDataSource
 import com.exorcise.movie.data.configuration.ConfigurationRepository
 import com.exorcise.movie.data.configuration.ConfigurationRepositoryImpl
+import com.exorcise.movie.data.location.LocationRepository
+import com.exorcise.movie.data.location.LocationRepositoryImpl
 import com.exorcise.movie.data.movies.MoviesRemoteDataSource
 import com.exorcise.movie.data.movies.MoviesRepository
 import com.exorcise.movie.data.movies.MoviesRepositoryImpl
@@ -22,9 +24,14 @@ class RepositoriesModule {
         moviesRemoteDataSource: MoviesRemoteDataSource,
         configurationRepository: ConfigurationRepository,
         moviesLocalDataSource: MoviesLocalDataSource,
+
+        ): MoviesRepository =
+        MoviesRepositoryImpl(moviesRemoteDataSource, configurationRepository, moviesLocalDataSource)
+
+    @Provides
+    fun provideLocationRepository(
         moviesFirebaseDataSource: MoviesFirebaseDataSource
-    ): MoviesRepository =
-        MoviesRepositoryImpl(moviesRemoteDataSource, configurationRepository,moviesLocalDataSource,moviesFirebaseDataSource)
+    ): LocationRepository = LocationRepositoryImpl(moviesFirebaseDataSource)
 
     @Provides
     fun provideConfigurationRepository(

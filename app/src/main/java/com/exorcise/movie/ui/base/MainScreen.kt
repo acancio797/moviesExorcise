@@ -15,7 +15,7 @@ import com.exorcise.movie.ui.base.MainViewModel
 import com.exorcise.movie.ui.components.BottomNavItem
 import com.exorcise.movie.ui.components.FragmentContainer
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun MainScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
@@ -40,31 +40,11 @@ fun MainScreen(
                 FragmentContainer(
                     fragmentManager = fragmentManager,
                     currentItem = currentTab,
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         )
     }
 }
 
-@Composable
-fun PersonalScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(text = "Personal Screen", modifier = Modifier.padding(16.dp))
-    }
-}
 
-
-@Composable
-fun MapScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(text = "Map Screen", modifier = Modifier.padding(16.dp))
-    }
-}
-
-@Composable
-fun PhotosScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(text = "Photos Screen", modifier = Modifier.padding(16.dp))
-    }
-}

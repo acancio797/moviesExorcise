@@ -11,7 +11,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 class MovieFragment : Fragment() {
 
@@ -37,7 +36,7 @@ class MovieFragment : Fragment() {
 
         viewModel.uiState.collectAsState().value.let { state ->
             when (state) {
-                is HomeUiState.HasMovies -> MovieFeedScreen(
+                is MovieUiState.HasMovies -> MovieFeedScreen(
                     uiState = state,
                     moviesLazyListState = lazyListState,
                     onGetMovies = {
@@ -50,7 +49,7 @@ class MovieFragment : Fragment() {
                     onSelectType = 0
                 )
 
-                is HomeUiState.NoMovies -> NoMoviesScreen(
+                is MovieUiState.NoMovies -> NoMoviesScreen(
                     uiState = state,
                     onGetMovies = {
                         viewModel.refreshMovies()

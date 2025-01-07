@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.*
+import com.exorcise.movie.ui.map.MapFragment
 import com.exorcise.movie.ui.movie.MovieFragment
 import com.exorcise.movie.ui.person.PersonalFragment
 
@@ -24,7 +25,7 @@ fun FragmentContainer(
         val fragment = when (currentItem) {
             BottomNavItem.Personal -> PersonalFragment()
             BottomNavItem.Movies -> MovieFragment()
-            BottomNavItem.Map -> PersonalFragment()
+            BottomNavItem.Map -> MapFragment()
             BottomNavItem.Photos -> PersonalFragment()
             else -> PersonalFragment()
         }

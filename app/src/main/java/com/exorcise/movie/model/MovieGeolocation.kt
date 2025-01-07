@@ -1,10 +1,10 @@
 package com.exorcise.movie.model
 
 import com.google.firebase.firestore.GeoPoint
+import com.google.type.DateTime
 
-data class MovieGeolocation (
+data class MovieGeolocation(
     val id: String = "",
-    val idMovie: Int = 0,
-    val image: String = "",
+    val dateTime: DateTime,
     val position: GeoPoint? = null
 )

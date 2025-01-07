@@ -40,7 +40,7 @@ import java.util.*
 @Composable
 fun MovieFeedScreen(
     modifier: Modifier = Modifier,
-    uiState: HomeUiState.HasMovies,
+    uiState: MovieUiState.HasMovies,
     moviesLazyListState: LazyListState,
     onGetMovies: () -> Unit,
     onGetPopularTv: () -> Unit,
@@ -52,7 +52,7 @@ fun MovieFeedScreen(
         modifier = modifier,
         lazyListState = moviesLazyListState,
     ) { contentPadding ->
-        Column(
+        Column( modifier.padding(top = 12.dp)
         ) {
             Row (
                 modifier = Modifier
@@ -144,7 +144,7 @@ fun MovieFeedScreen(
 @Composable
 fun NoMoviesScreen(
     modifier: Modifier = Modifier,
-    uiState: HomeUiState.NoMovies,
+    uiState: MovieUiState.NoMovies,
     onGetMovies: () -> Unit,
 ) {
     HomeScaffold(modifier = modifier) {
@@ -252,7 +252,7 @@ fun EmptyNotice(modifier: Modifier = Modifier) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun HomeScaffold(
     modifier: Modifier = Modifier,
@@ -277,7 +277,7 @@ val LazyListState?.isScrolled: Boolean
 fun PreviewMovieFeedScreen() {
     MovieAppFoundation {
         MovieFeedScreen(
-            uiState = HomeUiState.HasMovies(
+            uiState = MovieUiState.HasMovies(
                 moviesFeed = (1..5).map { seed ->
                     MovieSummary(
                         id = seed,
@@ -307,7 +307,7 @@ fun PreviewMovieFeedScreen() {
 fun PreviewNoMoviesScreenWithLoading() {
     MovieAppFoundation {
         NoMoviesScreen(
-            uiState = HomeUiState.NoMovies(
+            uiState = MovieUiState.NoMovies(
                 isRefreshing = true,
                 selected = 0,
                 errorMessages = emptyList()
@@ -323,7 +323,7 @@ fun PreviewNoMoviesScreenWithLoading() {
 fun PreviewNoMoviesScreenWithError() {
     MovieAppFoundation {
         NoMoviesScreen(
-            uiState = HomeUiState.NoMovies(
+            uiState = MovieUiState.NoMovies(
                 isRefreshing = false,
                 selected = 0,
                 errorMessages = listOf("some error")

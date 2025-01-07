@@ -1,7 +1,6 @@
 package com.exorcise.movie.data.movies
 
 import com.exorcise.movie.data.configuration.ConfigurationRepository
-import com.exorcise.movie.firebase.MoviesFirebaseDataSource
 import com.exorcise.movie.local.MoviesLocalDataSource
 import com.exorcise.movie.model.*
 import kotlin.math.roundToInt
@@ -10,7 +9,6 @@ class MoviesRepositoryImpl(
     private val moviesRemoteDataSource: MoviesRemoteDataSource,
     private val configurationRepository: ConfigurationRepository,
     private val moviesLocalDataSource: MoviesLocalDataSource,
-    private val moviesFirebaseDataSource: MoviesFirebaseDataSource,
 ) :
     MoviesRepository {
 
@@ -87,16 +85,6 @@ class MoviesRepositoryImpl(
         var data = moviesLocalDataSource.getGetLocalMovies()
         return Result.success(data)
     }
-
-    override suspend fun fetchMovieLocations(): Result<List<MovieGeolocation?>> {
-        try {
-            val data = moviesFirebaseDataSource.getMoviesGeolocations()
-            return Result.success(data)
-        } catch (ex: Exception) {
-            return Result.failure(ex)
-        }
-    }
-
 
     private suspend fun <T> fetchWithConfiguration(
         onSuccessConfigurationFetch: suspend (ApiConfiguration) -> Result<T>

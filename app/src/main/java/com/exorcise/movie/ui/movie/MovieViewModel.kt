@@ -12,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(private val moviesRepo: MoviesRepository) : ViewModel() {
 
-    private val viewModelState = MutableStateFlow(HomeViewModelState(isRefreshing = true))
+    private val viewModelState = MutableStateFlow(MovieViewModelState(isRefreshing = true))
 
     val uiState = viewModelState
         .map { it.toUiState() }
@@ -33,16 +33,22 @@ class MovieViewModel @Inject constructor(private val moviesRepo: MoviesRepositor
             val result = moviesRepo.fetchPopularMovies(1)
             val localResult = moviesRepo.fetchLocal()
             viewModelState.update { state ->
-                if(result.isSuccess){
-                val feed = result.getOrElse { throwable ->
-                    val errorMessages = state.errorMessages + (throwable.message ?: "")
-                    return@update state.copy(errorMessages = errorMessages, isRefreshing = false)
-                }
-                state.copy(moviesFeed = feed, isRefreshing = false, errorMessages = emptyList())}
-                else{
+                if (result.isSuccess) {
+                    val feed = result.getOrElse { throwable ->
+                        val errorMessages = state.errorMessages + (throwable.message ?: "")
+                        return@update state.copy(
+                            errorMessages = errorMessages,
+                            isRefreshing = false
+                        )
+                    }
+                    state.copy(moviesFeed = feed, isRefreshing = false, errorMessages = emptyList())
+                } else {
                     val feed = localResult.getOrElse { throwable ->
                         val errorMessages = state.errorMessages + (throwable.message ?: "")
-                        return@update state.copy(errorMessages = errorMessages, isRefreshing = false)
+                        return@update state.copy(
+                            errorMessages = errorMessages,
+                            isRefreshing = false
+                        )
                     }
                     state.copy(moviesFeed = feed, isRefreshing = false, errorMessages = emptyList())
                 }
@@ -66,44 +72,45 @@ class MovieViewModel @Inject constructor(private val moviesRepo: MoviesRepositor
     }
 }
 
-sealed interface HomeUiState {
+sealed interface MovieUiState {
     val isRefreshing: Boolean
-    val selected:Int
+    val selected: Int
     val errorMessages: List<String>
     val hasError: Boolean
         get() = errorMessages.isNotEmpty()
 
     data class NoMovies(
         override val isRefreshing: Boolean,
-        override val selected:Int,
+        override val selected: Int,
         override val errorMessages: List<String>
-    ) : HomeUiState
+    ) : MovieUiState
 
     data class HasMovies(
         val moviesFeed: List<MovieSummary>,
         override val isRefreshing: Boolean,
-        override val selected:Int,
+        override val selected: Int,
         override val errorMessages: List<String>
-    ) : HomeUiState
+    ) : MovieUiState
 }
 
-private data class HomeViewModelState(
+private data class MovieViewModelState(
     val moviesFeed: List<MovieSummary>? = null,
     val isRefreshing: Boolean = false,
     val errorMessages: List<String> = emptyList()
 ) {
-    fun toUiState(): HomeUiState =
+    fun toUiState(): MovieUiState =
         when {
             moviesFeed != null && moviesFeed.isNotEmpty() -> {
-                HomeUiState.HasMovies(
+                MovieUiState.HasMovies(
                     moviesFeed = moviesFeed,
                     isRefreshing = isRefreshing,
                     selected = 0,
                     errorMessages = errorMessages,
                 )
             }
+
             else -> {
-                HomeUiState.NoMovies(
+                MovieUiState.NoMovies(
                     isRefreshing = isRefreshing,
                     selected = 0,
                     errorMessages = errorMessages,

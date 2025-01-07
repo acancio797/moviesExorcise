@@ -10,5 +10,4 @@ interface MoviesRepository {
 
     suspend fun fetchMovieDetails(id: Int): Result<MovieDetails>
     suspend fun fetchLocal(): Result<List<MovieSummary>>
-    suspend fun fetchMovieLocations(): Result<List<MovieGeolocation?>>
 }
