@@ -75,7 +75,6 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
 
-    // Material3 (fíjate en la versión de M3 que sea compatible con Compose 1.5.3)
     // Revisar: https://developer.android.com/jetpack/androidx/releases/compose-material3
     implementation "androidx.compose.material3:material3:1.1.2"
     implementation 'com.google.android.material:material:1.12.0'

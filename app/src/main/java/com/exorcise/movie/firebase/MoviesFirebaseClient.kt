@@ -27,7 +27,8 @@ class MoviesFirebaseClient @Inject constructor(
 
     suspend fun insertMovie(movie: MapPoint) {
         val dataMap = movie.toMap()
-             db.collection("movies")
+
+        db.collection("movies")
             .add(dataMap)
             .await()
 
