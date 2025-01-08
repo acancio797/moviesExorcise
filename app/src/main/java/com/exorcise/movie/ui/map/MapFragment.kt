@@ -10,15 +10,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.exorcise.movie.model.MapPoint
-import com.exorcise.movie.ui.base.LoadingMoviesScreen
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -48,11 +45,10 @@ class MapFragment : Fragment() {
         viewModel.uiState.collectAsState().value.let { state ->
             when (state) {
                 is MapUiState.HasMarkers -> MapFragmentHome(
-                    name = state.markers,
+                    markers = state.markers,
                 )
 
-                else -> LoadingMoviesScreen(
-                    modifier = Modifier
+                else -> MapFragmentHome(
                 )
 
             }
@@ -65,7 +61,7 @@ class MapFragment : Fragment() {
     @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     fun MapFragmentHome(
-        name: List<MapPoint?> = emptyList(),
+        markers: List<MapPoint?> = emptyList(),
     ) {
 
         MaterialTheme {

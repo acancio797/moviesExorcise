@@ -2,6 +2,7 @@
     <string name="app_name">Movie</string>
 
     <string name="movie_details_overview_title">Overview</string>
+    <string name="personal_details_overview_title">Biography</string>
     <string name="time_separator_char"> • </string>
     <string name="retry_action">Retry</string>
     <string name="topRated">top Rated</string>

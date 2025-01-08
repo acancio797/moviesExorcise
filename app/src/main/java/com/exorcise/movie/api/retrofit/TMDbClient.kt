@@ -3,7 +3,9 @@ package com.exorcise.movie.api.retrofit
 import com.exorcise.movie.api.MoviesApiClient
 import com.exorcise.movie.api.responses.ConfigurationResponse
 import com.exorcise.movie.api.responses.MovieResponse
+import com.exorcise.movie.api.responses.PersonDetailResponse
 import com.exorcise.movie.api.responses.PopularMoviesResponse
+import com.exorcise.movie.api.responses.PopularPersonResponse
 import com.exorcise.movie.api.responses.PopularTvResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -22,4 +24,10 @@ interface TMDbClient : MoviesApiClient {
 
     @GET("movie/{id}")
     override suspend fun getMovieDetails(@Path("id") id: Int): Result<MovieResponse>
+
+    @GET("person/popular")
+    override suspend fun getPopularPerson(@Query("page") page: Int): Result<PopularPersonResponse>
+
+    @GET("person/{id}")
+    override suspend fun getPersonDetails(@Path("id") id: Int): Result<PersonDetailResponse>
 }

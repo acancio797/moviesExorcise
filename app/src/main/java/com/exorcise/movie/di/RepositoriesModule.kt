@@ -8,6 +8,9 @@ import com.exorcise.movie.data.location.LocationRepositoryImpl
 import com.exorcise.movie.data.movies.MoviesRemoteDataSource
 import com.exorcise.movie.data.movies.MoviesRepository
 import com.exorcise.movie.data.movies.MoviesRepositoryImpl
+import com.exorcise.movie.data.person.PersonRemoteDataSource
+import com.exorcise.movie.data.person.PersonRepository
+import com.exorcise.movie.data.person.PersonRepositoryImpl
 import com.exorcise.movie.firebase.MoviesFirebaseDataSource
 import com.exorcise.movie.local.MoviesLocalDataSource
 import dagger.Module
@@ -32,6 +35,13 @@ class RepositoriesModule {
     fun provideLocationRepository(
         moviesFirebaseDataSource: MoviesFirebaseDataSource
     ): LocationRepository = LocationRepositoryImpl(moviesFirebaseDataSource)
+
+    @Provides
+    fun providePersonRepository(
+        personRemoteDataSource: PersonRemoteDataSource,
+        configurationRepository: ConfigurationRepository,
+    ): PersonRepository = PersonRepositoryImpl(personRemoteDataSource, configurationRepository)
+
 
     @Provides
     fun provideConfigurationRepository(

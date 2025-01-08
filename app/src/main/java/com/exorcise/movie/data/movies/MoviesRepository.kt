@@ -2,7 +2,6 @@ package com.exorcise.movie.data.movies
 
 import com.exorcise.movie.model.MovieSummary
 import com.exorcise.movie.model.MovieDetails
-import com.exorcise.movie.model.MovieGeolocation
 
 interface MoviesRepository {
     suspend fun fetchPopularMovies(page: Int): Result<List<MovieSummary>>
