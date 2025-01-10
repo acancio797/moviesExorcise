@@ -12,6 +12,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,43 +47,44 @@ fun MovieFeedScreen(
     onGetMovies: () -> Unit,
     onGetPopularTv: () -> Unit,
     onSelectMovie: (Int) -> Unit,
-    onSelectType:Int,
+    onSelectType: Int,
 ) {
 
     HomeScaffold(
         modifier = modifier,
         lazyListState = moviesLazyListState,
     ) { contentPadding ->
-        Column( modifier.padding(top = 12.dp)
+        Column(
+            modifier.padding(top = 12.dp)
         ) {
-            Row (
+            Row(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(top = 12.dp)
-            ){
-                    Surface(
-                        shape = CircleShape,
-                        modifier = Modifier
-                            .padding(horizontal = 2.dp)
-                            .width(0.dp)
-                            .height(29.dp)
-                            .weight(1F)
-                            .clip(CircleShape),
-                        color = if(onSelectType == 0)androidx.compose.ui.graphics.Color.Red else androidx.compose.ui.graphics.Color.Gray,
-                        onClick = {
-                            onGetMovies()
-                        },
-                    ) {
+            ) {
+                Surface(
+                    shape = CircleShape,
+                    modifier = Modifier
+                        .padding(horizontal = 2.dp)
+                        .width(0.dp)
+                        .height(29.dp)
+                        .weight(1F)
+                        .clip(CircleShape),
+                    color = if (onSelectType == 0) androidx.compose.ui.graphics.Color.Red else androidx.compose.ui.graphics.Color.Gray,
+                    onClick = {
+                        onGetMovies()
+                    },
+                ) {
 
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentSize(Alignment.Center),
-                            text = "Movies",
-                            color = androidx.compose.ui.graphics.Color.White,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentSize(Alignment.Center),
+                        text = "Movies",
+                        color = androidx.compose.ui.graphics.Color.White,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
 
                 Surface(
                     shape = CircleShape,
@@ -91,7 +94,7 @@ fun MovieFeedScreen(
                         .height(29.dp)
                         .weight(1F)
                         .clip(CircleShape),
-                    color = if(onSelectType == 1)androidx.compose.ui.graphics.Color.Red else androidx.compose.ui.graphics.Color.Gray,
+                    color = if (onSelectType == 1) androidx.compose.ui.graphics.Color.Red else androidx.compose.ui.graphics.Color.Gray,
                     onClick = {
                         onGetPopularTv()
                     },
@@ -109,6 +112,8 @@ fun MovieFeedScreen(
 
 
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            DropDownMenu()
             Spacer(modifier = Modifier.height(8.dp))
             SwipeRefresh(
                 modifier = modifier.padding(
@@ -157,6 +162,7 @@ fun NoMoviesScreen(
                     onGetMovies()
                 }
             }
+
             false -> {
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -373,3 +379,57 @@ fun PreviewEmptyNotice() {
         EmptyNotice()
     }
 }
+
+@Composable
+fun DropDownMenu() {
+
+    val isDropDownExpanded = remember {
+        mutableStateOf(false)
+    }
+
+    val itemPosition = remember {
+        mutableStateOf(0)
+    }
+
+    val usernames = listOf("Popular", "Top Rated", "Upcoming")
+
+    Column(
+        modifier = Modifier.padding(start = 20.dp, end = 10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+
+        Box {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.clickable {
+                    isDropDownExpanded.value = true
+                }
+            ) {
+                Text(text = usernames[itemPosition.value])
+                Image(
+                    painter = painterResource(id = R.drawable.drop_down_ic),
+                    contentDescription = "DropDown Icon"
+                )
+            }
+            DropdownMenu(
+                expanded = isDropDownExpanded.value,
+                onDismissRequest = {
+                    isDropDownExpanded.value = false
+                }) {
+                usernames.forEachIndexed { index, username ->
+                    DropdownMenuItem(text = {
+                        Text(text = username)
+                    },
+                        onClick = {
+                            isDropDownExpanded.value = false
+                            itemPosition.value = index
+                        })
+                }
+            }
+        }
+
+    }
+}
+
