@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.exorcise.movie.model.TypeMovieOrder
 
 class MovieFragment : Fragment() {
 
@@ -39,8 +40,8 @@ class MovieFragment : Fragment() {
                 is MovieUiState.HasMovies -> MovieFeedScreen(
                     uiState = state,
                     moviesLazyListState = lazyListState,
-                    onGetMovies = {
-                        viewModel.refreshMovies()
+                    onGetMovies = { value ->
+                        viewModel.refreshMovies(value)
                     },
                     onSelectMovie = onSelectMovie,
                     onGetPopularTv = {
@@ -52,7 +53,7 @@ class MovieFragment : Fragment() {
                 is MovieUiState.NoMovies -> NoMoviesScreen(
                     uiState = state,
                     onGetMovies = {
-                        viewModel.refreshMovies()
+                        viewModel.refreshMovies(TypeMovieOrder.Popular)
                     }
                 )
 

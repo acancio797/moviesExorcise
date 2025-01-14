@@ -10,13 +10,13 @@ import com.google.type.DateTime
 fun DocumentSnapshot.toMovieGeolocation(): MapPoint? {
     val data = this.data ?: return null
 
-    val latitude = data["latitude"] as? Number
-    val longitude = data["longitude"] as? Number
+
+    val latLng = data["position"] as? GeoPoint
     val dateTime = data["time"] as? DateTime
 
     return MapPoint(
         id = this.id,
         time = dateTime,
-        position = LatLng(latitude?.toDouble() ?: 0.0, longitude?.toDouble() ?: 0.0),
+        position = LatLng(latLng?.latitude ?: 0.0, latLng?.longitude ?: 0.0),
     )
 }

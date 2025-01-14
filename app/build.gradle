@@ -36,6 +36,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -144,4 +145,7 @@ dependencies {
     // Utils
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1"
     implementation "androidx.fragment:fragment-ktx:1.8.5"
+
+    // Image
+    implementation 'com.google.firebase:firebase-storage:20.2.0'
 }

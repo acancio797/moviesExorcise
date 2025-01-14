@@ -33,66 +33,51 @@ class MapFragment : Fragment() {
 
         return ComposeView(requireContext()).apply {
             setContent {
-                MapFragmentUI(viewModel = hiltViewModel())
+                MapRoute(viewModel = hiltViewModel())
             }
         }
     }
 
+}
 
-    @Composable
-    fun MapFragmentUI(viewModel: MapViewModel) {
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun MapFragmentHome(
+    markers: List<MapPoint?> = emptyList(),
+) {
 
-        viewModel.uiState.collectAsState().value.let { state ->
-            when (state) {
-                is MapUiState.HasMarkers -> MapFragmentHome(
-                    markers = state.markers,
-                )
-
-                else -> MapFragmentHome(
-                )
-
-            }
+    MaterialTheme {
+        Scaffold(
+            modifier = Modifier,
+        ) { _ ->
+            GoogleMapScreenWithMarkers(markers)
         }
 
+    }
+}
 
+@Composable
+fun GoogleMapScreenWithMarkers(markers: List<MapPoint?> = emptyList()) {
+
+    var sydney = LatLng(-33.852, 151.211)
+    if (markers.isNotEmpty()) {
+        sydney = markers.first()?.position ?: LatLng(0.0, 0.0)
+    }
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(sydney, 10f)
     }
 
-    @Preview
-    @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-    @Composable
-    fun MapFragmentHome(
-        markers: List<MapPoint?> = emptyList(),
+    GoogleMap(
+        modifier = Modifier.fillMaxSize(),
+        cameraPositionState = cameraPositionState
     ) {
 
-        MaterialTheme {
-            Scaffold(
-                modifier = Modifier,
-            ) { _ ->
-                GoogleMapScreenWithMarkers()
-            }
-
+        markers.forEach { marker ->
+            Marker(
+                state = MarkerState(position = marker?.position ?: LatLng(0.0, 0.0)),
+                title = marker?.time.toString(),
+            )
         }
     }
-
-    @Composable
-    fun GoogleMapScreenWithMarkers(markers: List<MapPoint> = emptyList()) {
-        val sydney = LatLng(-33.852, 151.211)
-        val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(sydney, 10f)
-        }
-
-        GoogleMap(
-            modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState
-        ) {
-
-            markers.forEach { marker ->
-                Marker(
-                    state = MarkerState(position = marker.position),
-                    title = marker.time.toString(),
-                )
-            }
-        }
-    }
-
 }

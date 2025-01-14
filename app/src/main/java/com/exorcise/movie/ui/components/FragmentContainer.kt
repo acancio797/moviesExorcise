@@ -7,9 +7,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.*
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.exorcise.movie.ui.map.MapFragment
 import com.exorcise.movie.ui.movie.MovieFragment
 import com.exorcise.movie.ui.person.PersonalFragment
+import com.exorcise.movie.ui.photo.PhotoFragment
+import com.exorcise.movie.ui.photo.PhotosViewModel
 
 
 @Composable
@@ -26,7 +29,7 @@ fun FragmentContainer(
             BottomNavItem.Personal -> PersonalFragment()
             BottomNavItem.Movies -> MovieFragment()
             BottomNavItem.Map -> MapFragment()
-            BottomNavItem.Photos -> PersonalFragment()
+            BottomNavItem.Photos -> PhotoFragment()
             else -> PersonalFragment()
         }
         fragmentManager.commit {

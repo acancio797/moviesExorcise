@@ -19,6 +19,12 @@ interface TMDbClient : MoviesApiClient {
     @GET("movie/popular")
     override suspend fun getPopularMovies(@Query("page") page: Int): Result<PopularMoviesResponse>
 
+    @GET("movie/top_rated")
+    override suspend fun getTopRatedMovies(@Query("page") page: Int): Result<PopularMoviesResponse>
+
+    @GET("movie/upcoming")
+    override suspend fun getPopularUpcoming(@Query("page") page: Int): Result<PopularMoviesResponse>
+
     @GET("tv/popular")
     override suspend fun getPopularSeries(@Query("page") page: Int): Result<PopularTvResponse>
 

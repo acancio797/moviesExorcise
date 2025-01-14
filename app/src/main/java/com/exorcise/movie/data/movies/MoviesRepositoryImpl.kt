@@ -12,9 +12,9 @@ class MoviesRepositoryImpl(
 ) :
     MoviesRepository {
 
-    override suspend fun fetchPopularMovies(page: Int): Result<List<MovieSummary>> {
+    override suspend fun fetchPopularMovies(page: Int,type: TypeMovieOrder): Result<List<MovieSummary>> {
         return fetchWithConfiguration { apiConfiguration ->
-            var data = moviesRemoteDataSource.getPopularMovies(page).fold(
+            var data = moviesRemoteDataSource.getPopularMovies(page,type).fold(
                 onSuccess = { popularMoviesResponse ->
                     var data = popularMoviesResponse.popularMovies.map { movie ->
                         MovieSummary(

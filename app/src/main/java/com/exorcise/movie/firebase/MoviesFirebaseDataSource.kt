@@ -1,14 +1,14 @@
 package com.exorcise.movie.firebase
 
 import com.exorcise.movie.di.IODispatcher
+import com.exorcise.movie.model.ImageFile
 import com.exorcise.movie.model.MapPoint
-import com.exorcise.movie.model.MovieGeolocation
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MoviesFirebaseDataSource @Inject constructor(
-    private val client: MoviesFirebaseClient,
+    private val client: GeoPointFirebaseClient,
     @IODispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
     suspend fun getMoviesGeolocations() = withContext(ioDispatcher) {
@@ -18,4 +18,9 @@ class MoviesFirebaseDataSource @Inject constructor(
     suspend fun insertMoviesGeolocations(movie: MapPoint) = withContext(ioDispatcher) {
         client.insertMovie(movie)
     }
+
+    suspend fun updateMoviesGeolocations(imageFile: ImageFile) = withContext(ioDispatcher) {
+        client.uploadImageToFirebase(imageFile)
+    }
+
 }

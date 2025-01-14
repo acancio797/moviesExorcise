@@ -1,9 +1,15 @@
 package com.exorcise.movie.service
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.location.Location
+import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.exorcise.movie.data.location.LocationRepository
 import com.exorcise.movie.model.MapPoint
@@ -30,13 +36,38 @@ class LocationService : Service() {
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
+    override fun onCreate() {
+        super.onCreate()
+        createNotificationChannel()
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.d("LocationService", "Service started")
         getCurrentLocation()
+        scheduleNextRun()
         return START_STICKY
     }
 
+    private fun scheduleNextRun() {
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, LocationService::class.java)
+        val pendingIntent = PendingIntent.getService(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val triggerAtMillis = System.currentTimeMillis() + 5 * 60 * 1000 // 5 minutos
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            triggerAtMillis,
+            pendingIntent
+        )
+    }
+
     private fun getCurrentLocation() {
+        Log.d("LocationService", "Fetching location...")
         try {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 location?.let {
@@ -44,7 +75,7 @@ class LocationService : Service() {
                 }
             }
         } catch (ex: SecurityException) {
-
+            Log.e("LocationService", "SecurityException: ${ex.message}")
         }
 
     }
@@ -92,4 +123,16 @@ class LocationService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "LOCATION_CHANNEL",
+                "Location Updates",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            val manager = getSystemService(NotificationManager::class.java)
+            manager?.createNotificationChannel(channel)
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.exorcise.movie.utils
 
 import androidx.room.TypeConverter
+import com.exorcise.movie.model.TypeMovieOrder
 import java.util.Date
 
 class Converters {
@@ -12,5 +13,14 @@ class Converters {
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time?.toLong()
+    }
+}
+
+fun String.toTypeMovieOrder(): TypeMovieOrder {
+    return when (this) {
+        "Popular" -> TypeMovieOrder.Popular
+        "Top Rated" -> TypeMovieOrder.TopRated
+        "Upcoming" -> TypeMovieOrder.Upcoming
+        else -> TypeMovieOrder.Popular
     }
 }

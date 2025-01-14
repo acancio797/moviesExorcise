@@ -15,3 +15,15 @@ data class MovieDetails(
     val backdropUrl: String,
     val posterUrl: String
 )
+
+enum class TypeMovieOrder(
+    val messageOfTex: String
+) {
+    Popular("popular"),
+    TopRated("top_rated"),
+    Upcoming("upcoming");
+
+    fun getMessage(): String {
+        return messageOfTex
+    }
+}

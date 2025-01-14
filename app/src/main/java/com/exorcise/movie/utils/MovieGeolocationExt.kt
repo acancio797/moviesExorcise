@@ -5,12 +5,11 @@ import com.exorcise.movie.model.MovieGeolocation
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.GeoPoint
 
-fun MapPoint.toMap(): Map<String, Any> {
+fun MapPoint.toMap(): Map<String, Any?> {
 
     return mapOf(
-        "id" to this.id,
-        "time" to this.time!!,
-        "position" to this.position.toGeoPoint()
+        "time" to this.time.toString(),
+        "position" to this.position?.toGeoPoint()
     )
 }
 

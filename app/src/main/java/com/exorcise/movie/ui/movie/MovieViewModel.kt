@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.exorcise.movie.data.movies.MoviesRepository
 import com.exorcise.movie.model.MovieSummary
+import com.exorcise.movie.model.TypeMovieOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -23,14 +24,14 @@ class MovieViewModel @Inject constructor(private val moviesRepo: MoviesRepositor
         )
 
     init {
-        refreshMovies()
+        refreshMovies(TypeMovieOrder.Popular)
     }
 
-    fun refreshMovies() {
+    fun refreshMovies(getType: TypeMovieOrder) {
         viewModelState.update { it.copy(isRefreshing = true, errorMessages = emptyList()) }
 
         viewModelScope.launch {
-            val result = moviesRepo.fetchPopularMovies(1)
+            val result = moviesRepo.fetchPopularMovies(1, getType)
             val localResult = moviesRepo.fetchLocal()
             viewModelState.update { state ->
                 if (result.isSuccess) {
@@ -87,6 +88,7 @@ sealed interface MovieUiState {
 
     data class HasMovies(
         val moviesFeed: List<MovieSummary>,
+        val isMovies: Boolean = false,
         override val isRefreshing: Boolean,
         override val selected: Int,
         override val errorMessages: List<String>

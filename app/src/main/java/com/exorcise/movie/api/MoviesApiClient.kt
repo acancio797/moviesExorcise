@@ -6,11 +6,15 @@ import com.exorcise.movie.api.responses.PersonDetailResponse
 import com.exorcise.movie.api.responses.PopularMoviesResponse
 import com.exorcise.movie.api.responses.PopularPersonResponse
 import com.exorcise.movie.api.responses.PopularTvResponse
+import com.exorcise.movie.model.TypeMovieOrder
 
 interface MoviesApiClient {
     suspend fun getApiConfiguration(): Result<ConfigurationResponse>
 
     suspend fun getPopularMovies(page: Int): Result<PopularMoviesResponse>
+    suspend fun getTopRatedMovies(page: Int): Result<PopularMoviesResponse>
+
+    suspend fun getPopularUpcoming(page: Int): Result<PopularMoviesResponse>
     suspend fun getPopularSeries(page: Int): Result<PopularTvResponse>
 
 
