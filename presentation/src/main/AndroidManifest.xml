@@ -26,7 +26,7 @@
         </activity>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="key" />
+            android:value="AIzaSyCTdxVDjOX66YFLib-SHc3TM4LjsllMPk0" />
         <service
             android:name=".service.LocationService"
             android:enabled="true"

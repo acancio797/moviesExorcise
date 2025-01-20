@@ -1,6 +1,9 @@
 package com.exorcise.movie.data.movies
 
 
+import com.exorcise.data.api.responses.MovieResponse
+import com.exorcise.data.api.responses.PopularMovie
+import com.exorcise.data.api.responses.PopularMoviesResponse
 import com.exorcise.data.data.movies.MoviesRemoteDataSource
 import com.exorcise.data.data.movies.MoviesRepositoryImpl
 import com.exorcise.domain.model.MovieDetails
@@ -21,10 +24,10 @@ class MoviesRepositoryImplTest {
 
     @Test
     fun fetchPopularMovies() = runTest {
-        val popularMoviesResponse = com.exorcise.data.api.responses.PopularMoviesResponse(
+        val popularMoviesResponse = PopularMoviesResponse(
             page = 1,
             popularMovies = listOf(
-                com.exorcise.data.api.responses.PopularMovie(
+                PopularMovie(
                     adult = false,
                     backdropPath = "/sonic-backdropPath.jpg",
                     genreIds = listOf(28, 878, 35, 10751, 12),
@@ -40,7 +43,7 @@ class MoviesRepositoryImplTest {
                     voteAverage = 7.7f,
                     voteCount = 1000
                 ),
-                com.exorcise.data.api.responses.PopularMovie(
+                PopularMovie(
                     adult = false,
                     backdropPath = "/batman-backdropPath.jpg",
                     genreIds = listOf(80, 9648, 53),
@@ -113,7 +116,7 @@ class MoviesRepositoryImplTest {
     fun fetchMovieDetails() = runTest {
         val movieId = 1
         val movieGenres = listOf("Action", "Crime")
-        val movieDetailsResponse = com.exorcise.data.api.responses.MovieResponse(
+        val movieDetailsResponse = MovieResponse(
             id = movieId,
             title = "The Batman",
             tagline = "The Batman tagline",
@@ -122,8 +125,8 @@ class MoviesRepositoryImplTest {
             voteAverage = 7.8f,
             releaseDate = GregorianCalendar(2022, Calendar.MARCH, 1).time,
             genres = listOf(
-                com.exorcise.data.api.responses.MovieResponse.Genre(id = 0, movieGenres[0]),
-                com.exorcise.data.api.responses.MovieResponse.Genre(id = 1, movieGenres[1])
+                MovieResponse.Genre(id = 0, movieGenres[0]),
+                MovieResponse.Genre(id = 1, movieGenres[1])
             ),
             posterPath = "/batman-poster.jpg",
             backdropPath = "/batman-backdropPath.jpg",

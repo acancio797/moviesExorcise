@@ -17,9 +17,9 @@ class ConfigurationRepositoryImplTest {
 
     @Test
     fun fetchConfiguration() = runTest {
-        val apiConfigurationResponse = com.exorcise.data.api.responses.ConfigurationResponse(
+        val apiConfigurationResponse = ConfigurationResponse(
             changeKeys = emptyList(),
-            images = com.exorcise.data.api.responses.Images(
+            images = Images(
                 baseUrl = "http://image.org/",
                 secureBaseUrl = "https://image.org/",
                 backdropSizes = listOf(
