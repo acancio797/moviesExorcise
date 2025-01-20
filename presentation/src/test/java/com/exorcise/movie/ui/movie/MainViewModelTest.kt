@@ -1,7 +1,9 @@
 package com.exorcise.movie.ui.movie
 
-import com.exorcise.data.api.data.movies.MoviesRepository
+
 import com.exorcise.domain.model.MovieSummary
+import com.exorcise.domain.model.TypeMovieOrder
+import com.exorcise.domain.repository.MoviesRepository
 import com.exorcise.movie.ui.BaseViewModelTest
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -13,7 +15,7 @@ import org.junit.Test
 import java.util.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MainViewModelTest: BaseViewModelTest() {
+class MainViewModelTest : BaseViewModelTest() {
 
     @Test
     fun refreshMoviesSuccess() = runTest {
@@ -34,8 +36,10 @@ class MainViewModelTest: BaseViewModelTest() {
             ),
         )
 
-        val mockMoviesRepo = mockk<com.exorcise.data.api.data.movies.MoviesRepository> {
-            coEvery { fetchPopularMovies(1) } returns Result.success(expected)
+        val mockMoviesRepo = mockk<MoviesRepository> {
+            coEvery { fetchPopularMovies(1, TypeMovieOrder.Popular) } returns Result.success(
+                expected
+            )
             coEvery { fetchLocal() } returns Result.success(expected)
         }
 
@@ -53,8 +57,10 @@ class MainViewModelTest: BaseViewModelTest() {
         val errorMessage = "some error"
         val expected = listOf(errorMessage)
 
-        val mockMoviesRepo = mockk<com.exorcise.data.api.data.movies.MoviesRepository> {
-            coEvery { fetchPopularMovies(1) } returns Result.failure(Throwable(errorMessage))
+        val mockMoviesRepo = mockk<MoviesRepository> {
+            coEvery { fetchPopularMovies(1, TypeMovieOrder.Popular) } returns Result.failure(
+                Throwable(errorMessage)
+            )
             coEvery { fetchLocal() } returns Result.failure(Throwable(errorMessage))
         }
 

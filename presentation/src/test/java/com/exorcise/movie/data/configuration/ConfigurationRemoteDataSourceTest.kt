@@ -3,6 +3,7 @@ package com.exorcise.movie.data.configuration
 import com.exorcise.data.api.MoviesApiClient
 import com.exorcise.data.api.responses.ConfigurationResponse
 import com.exorcise.data.api.responses.Images
+import com.exorcise.data.data.configuration.ConfigurationRemoteDataSource
 import com.exorcise.data.local.MovieDao
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -52,9 +53,8 @@ class ConfigurationRemoteDataSourceTest {
         }
 
         val configurationRemoteDataSource =
-            com.exorcise.data.api.data.configuration.ConfigurationRemoteDataSource(
+            ConfigurationRemoteDataSource(
                 mockMoviesApiClient,
-                mockMoviesDao,
                 UnconfinedTestDispatcher(testScheduler)
             )
 

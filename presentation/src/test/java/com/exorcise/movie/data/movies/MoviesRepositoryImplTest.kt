@@ -1,12 +1,12 @@
 package com.exorcise.movie.data.movies
 
-import com.exorcise.data.api.responses.MovieResponse
-import com.exorcise.data.api.responses.PopularMovie
-import com.exorcise.data.api.responses.PopularMoviesResponse
-import com.exorcise.data.api.data.configuration.ConfigurationRepository
-import com.exorcise.data.local.MoviesLocalDataSource
+
+import com.exorcise.data.data.movies.MoviesRemoteDataSource
+import com.exorcise.data.data.movies.MoviesRepositoryImpl
 import com.exorcise.domain.model.MovieDetails
 import com.exorcise.domain.model.MovieSummary
+import com.exorcise.domain.model.TypeMovieOrder
+import com.exorcise.domain.repository.ConfigurationRepository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -83,12 +83,14 @@ class MoviesRepositoryImplTest {
         )
 
         val pageToFetch = 1
-        val mockMoviesRemoteDataSource = mockk<com.exorcise.data.api.data.movies.MoviesRemoteDataSource> {
-            coEvery { getPopularMovies(pageToFetch) } returns Result.success(
+        val type = TypeMovieOrder.Popular
+        val mockMoviesRemoteDataSource = mockk<MoviesRemoteDataSource> {
+            coEvery { getPopularMovies(pageToFetch, type) } returns Result.success(
                 popularMoviesResponse
             )
         }
-        val mockConfigurationRepository = mockk<com.exorcise.data.api.data.configuration.ConfigurationRepository> {
+        val mockConfigurationRepository = mockk<
+                ConfigurationRepository> {
             coEvery { fetchConfiguration() } returns Result.success(mockk {
                 every { urlForBackdrop(any()) } returns movieImageUrl
             })
@@ -98,13 +100,13 @@ class MoviesRepositoryImplTest {
         }
 
         val moviesRepository =
-            com.exorcise.data.api.data.movies.MoviesRepositoryImpl(
+            MoviesRepositoryImpl(
                 mockMoviesRemoteDataSource,
                 mockConfigurationRepository,
                 mockLocalDataRepository
             )
 
-        assertEquals(expected, moviesRepository.fetchPopularMovies(pageToFetch))
+        assertEquals(expected, moviesRepository.fetchPopularMovies(pageToFetch, type))
     }
 
     @Test
@@ -160,21 +162,23 @@ class MoviesRepositoryImplTest {
             )
         )
 
-        val mockMoviesRemoteDataSource = mockk<com.exorcise.data.api.data.movies.MoviesRemoteDataSource> {
-            coEvery { getMovieDetails(movieId) } returns Result.success(
-                movieDetailsResponse
-            )
-        }
-        val mockConfigurationRepository = mockk<com.exorcise.data.api.data.configuration.ConfigurationRepository> {
-            coEvery { fetchConfiguration() } returns Result.success(mockk {
-                every { urlForBackdrop(movieDetailsResponse.backdropPath) } returns backdropImageUrl
-                every { urlForPoster(movieDetailsResponse.posterPath) } returns posterImageUrl
-            })
-        }
+        val mockMoviesRemoteDataSource =
+            mockk<MoviesRemoteDataSource> {
+                coEvery { getMovieDetails(movieId) } returns Result.success(
+                    movieDetailsResponse
+                )
+            }
+        val mockConfigurationRepository =
+            mockk<ConfigurationRepository> {
+                coEvery { fetchConfiguration() } returns Result.success(mockk {
+                    every { urlForBackdrop(movieDetailsResponse.backdropPath) } returns backdropImageUrl
+                    every { urlForPoster(movieDetailsResponse.posterPath) } returns posterImageUrl
+                })
+            }
         val mockLocalDataRepository = mockk<com.exorcise.data.local.MoviesLocalDataSource> {
         }
         val moviesRepository =
-            com.exorcise.data.api.data.movies.MoviesRepositoryImpl(
+            MoviesRepositoryImpl(
                 mockMoviesRemoteDataSource,
                 mockConfigurationRepository,
                 mockLocalDataRepository

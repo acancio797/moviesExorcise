@@ -1,7 +1,8 @@
 package com.exorcise.movie.ui.details
 
-import com.exorcise.data.api.data.movies.MoviesRepository
+
 import com.exorcise.domain.model.MovieDetails
+import com.exorcise.domain.repository.MoviesRepository
 import com.exorcise.movie.ui.BaseViewModelTest
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -31,7 +32,7 @@ class DetailsViewModelTest: BaseViewModelTest() {
             posterUrl = "http://some-url/image.jpg"
         )
 
-        val mockMoviesRepo = mockk<com.exorcise.data.api.data.movies.MoviesRepository> {
+        val mockMoviesRepo = mockk<MoviesRepository> {
             coEvery { fetchMovieDetails(movieId) } returns Result.success(expected)
         }
 
@@ -48,7 +49,7 @@ class DetailsViewModelTest: BaseViewModelTest() {
         val errorMessage = "some error"
         val movieId = 1
 
-        val mockMoviesRepo = mockk<com.exorcise.data.api.data.movies.MoviesRepository> {
+        val mockMoviesRepo = mockk<MoviesRepository> {
             coEvery { fetchMovieDetails(movieId) } returns Result.failure(Throwable(errorMessage))
         }
 

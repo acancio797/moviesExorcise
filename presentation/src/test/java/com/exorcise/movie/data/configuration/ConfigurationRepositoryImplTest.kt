@@ -2,6 +2,8 @@ package com.exorcise.movie.data.configuration
 
 import com.exorcise.data.api.responses.ConfigurationResponse
 import com.exorcise.data.api.responses.Images
+import com.exorcise.data.data.configuration.ConfigurationRemoteDataSource
+import com.exorcise.data.data.configuration.ConfigurationRepositoryImpl
 import com.exorcise.domain.model.ApiConfiguration
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -46,14 +48,14 @@ class ConfigurationRepositoryImplTest {
             )
         )
 
-        val mockConfigurationRemoteDataSource = mockk<com.exorcise.data.api.data.configuration.ConfigurationRemoteDataSource> {
+        val mockConfigurationRemoteDataSource = mockk<ConfigurationRemoteDataSource> {
             coEvery { getApiConfiguration() } returns Result.success(
                 apiConfigurationResponse
             )
         }
 
         val configurationRepository =
-            com.exorcise.data.api.data.configuration.ConfigurationRepositoryImpl(
+            ConfigurationRepositoryImpl(
                 mockConfigurationRemoteDataSource
             )
 

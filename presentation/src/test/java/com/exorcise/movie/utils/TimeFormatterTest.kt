@@ -1,5 +1,6 @@
 package com.exorcise.movie.utils
 
+import com.exorcise.core.utils.TimeFormatter
 import org.junit.Assert
 import org.junit.Test
 
@@ -9,23 +10,23 @@ class TimeFormatterTest {
     fun formatMinutesInHours() {
         Assert.assertEquals(
             "0h 0m",
-            com.exorcise.core.utils.TimeFormatter.formatMinutesInHours(0)
+            TimeFormatter.formatMinutesInHours(0)
         )
         Assert.assertEquals(
             "0h 35m",
-            com.exorcise.core.utils.TimeFormatter.formatMinutesInHours(35)
+            TimeFormatter.formatMinutesInHours(35)
         )
         Assert.assertEquals(
             "1h 35m",
-            com.exorcise.core.utils.TimeFormatter.formatMinutesInHours(95)
+            TimeFormatter.formatMinutesInHours(95)
         )
         Assert.assertEquals(
             "2h 20m",
-            com.exorcise.core.utils.TimeFormatter.formatMinutesInHours(140)
+            TimeFormatter.formatMinutesInHours(140)
         )
         Assert.assertEquals(
             "3h 59m",
-            com.exorcise.core.utils.TimeFormatter.formatMinutesInHours(239)
+            TimeFormatter.formatMinutesInHours(239)
         )
     }
 }
