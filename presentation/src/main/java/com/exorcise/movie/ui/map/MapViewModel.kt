@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
 import com.exorcise.domain.model.MapPoint
-import com.exorcise.domain.repository.LocationRepository
+import com.exorcise.domain.usecase.LoadLocationUserCase
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MapViewModel @Inject constructor(private val locationRepository: LocationRepository) :
+class MapViewModel @Inject constructor(private val locationUserCase: LoadLocationUserCase) :
     ViewModel() {
     private val viewModelState = MutableStateFlow(MapViewModelState(isLoading = true))
 
@@ -36,7 +36,7 @@ class MapViewModel @Inject constructor(private val locationRepository: LocationR
         viewModelState.update { it.copy(isLoading = true, errorMessages = emptyList()) }
 
         viewModelScope.launch {
-            val result = locationRepository.loadLocations()
+            val result = locationUserCase()
             viewModelState.update { state ->
                 if (result.isSuccess) {
                     val markers = result.getOrElse { throwable ->

@@ -3,7 +3,7 @@ package com.exorcise.movie.ui.person
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.exorcise.domain.model.PersonDetails
-import com.exorcise.domain.repository.PersonRepository
+import com.exorcise.domain.usecase.GetPopularPersonUserCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PersonalViewModel @Inject constructor(private val peronRepo: PersonRepository) :
+class PersonalViewModel @Inject constructor(private val getPopularPersonUserCase: GetPopularPersonUserCase) :
     ViewModel() {
 
     private val viewModelState = MutableStateFlow(DetailsPersonViewModelState(isLoading = true))
@@ -27,12 +27,15 @@ class PersonalViewModel @Inject constructor(private val peronRepo: PersonReposit
             viewModelState.value.toUiState()
         )
 
+    init {
+        fetchMovieDetails()
+    }
 
     fun fetchMovieDetails() {
         viewModelState.update { it.copy(isLoading = true) }
 
         viewModelScope.launch {
-            val result = peronRepo.getPopularPerson()
+            val result = getPopularPersonUserCase()
             viewModelState.update { state ->
                 val movieDetails = result.getOrElse { throwable ->
                     val errorMessage = throwable.message ?: ""
