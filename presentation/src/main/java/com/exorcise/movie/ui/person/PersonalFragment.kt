@@ -53,8 +53,8 @@ import com.exorcise.movie.R
 import com.exorcise.domain.model.PersonDetails
 import com.exorcise.movie.ui.LocalDateFormatter
 import com.exorcise.movie.ui.LocalTimeFormatter
-import com.exorcise.core.utils.DateFormatter
-import com.exorcise.core.utils.TimeFormatter
+import com.exorcise.domain.utils.DateFormatter
+import com.exorcise.domain.utils.TimeFormatter
 
 
 class PersonalFragment : Fragment() {
@@ -193,8 +193,8 @@ fun Tagline(
 fun Details(
     modifier: Modifier = Modifier,
     person: PersonDetails,
-    dateFormatter: com.exorcise.core.utils.DateFormatter = LocalDateFormatter.current,
-    timeFormatter: com.exorcise.core.utils.TimeFormatter = LocalTimeFormatter.current
+    dateFormatter: DateFormatter = LocalDateFormatter.current,
+    timeFormatter: TimeFormatter = LocalTimeFormatter.current
 ) {
     LazyColumn(
         modifier = modifier
@@ -235,8 +235,8 @@ fun Highlights(
     rating: Double,
     birtDate: String,
     alsoKnowsAs: List<String>,
-    dateFormatter: com.exorcise.core.utils.DateFormatter = LocalDateFormatter.current,
-    timeFormatter: com.exorcise.core.utils.TimeFormatter = LocalTimeFormatter.current
+    dateFormatter: DateFormatter = LocalDateFormatter.current,
+    timeFormatter: TimeFormatter = LocalTimeFormatter.current
 ) {
     Card(
         modifier = modifier,

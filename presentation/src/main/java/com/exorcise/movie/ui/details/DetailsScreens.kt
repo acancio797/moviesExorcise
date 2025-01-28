@@ -35,8 +35,8 @@ import com.exorcise.movie.ui.LocalTimeFormatter
 import com.exorcise.movie.ui.MovieAppFoundation
 import com.exorcise.movie.ui.components.Rating
 import com.exorcise.movie.ui.components.RetryScreen
-import com.exorcise.core.utils.DateFormatter
-import com.exorcise.core.utils.TimeFormatter
+import com.exorcise.domain.utils.DateFormatter
+import com.exorcise.domain.utils.TimeFormatter
 import java.util.*
 
 @Composable
@@ -152,8 +152,8 @@ fun DetailsScaffold(
 fun Details(
     modifier: Modifier = Modifier,
     movie: MovieDetails,
-    dateFormatter: com.exorcise.core.utils.DateFormatter = LocalDateFormatter.current,
-    timeFormatter: com.exorcise.core.utils.TimeFormatter = LocalTimeFormatter.current
+    dateFormatter: DateFormatter = LocalDateFormatter.current,
+    timeFormatter: TimeFormatter = LocalTimeFormatter.current
 ) {
     LazyColumn(
         modifier = modifier
@@ -273,8 +273,8 @@ fun Highlights(
     releaseDate: Date,
     runtime: Int,
     genres: List<String>,
-    dateFormatter: com.exorcise.core.utils.DateFormatter = LocalDateFormatter.current,
-    timeFormatter: com.exorcise.core.utils.TimeFormatter = LocalTimeFormatter.current
+    dateFormatter: DateFormatter = LocalDateFormatter.current,
+    timeFormatter: TimeFormatter = LocalTimeFormatter.current
 ) {
     Card(
         modifier = modifier,

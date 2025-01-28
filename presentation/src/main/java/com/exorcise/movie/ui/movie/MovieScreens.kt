@@ -33,7 +33,7 @@ import com.exorcise.movie.ui.LocalDateFormatter
 import com.exorcise.movie.ui.MovieAppFoundation
 import com.exorcise.movie.ui.components.Rating
 import com.exorcise.movie.ui.components.RetryScreen
-import com.exorcise.core.utils.DateFormatter
+import com.exorcise.domain.utils.DateFormatter
 import com.exorcise.domain.utils.toTypeMovieOrder
 import java.util.*
 
@@ -128,7 +128,7 @@ fun NoMoviesScreen(
 fun MovieItem(
     movieSummary: MovieSummary,
     onSelect: (Int) -> Unit,
-    dateFormatter: com.exorcise.core.utils.DateFormatter = LocalDateFormatter.current
+    dateFormatter: DateFormatter = LocalDateFormatter.current
 ) {
     Card(
         modifier = Modifier

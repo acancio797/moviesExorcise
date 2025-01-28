@@ -45,7 +45,7 @@ class MovieFragment : Fragment() {
                     },
                     onSelectMovie = onSelectMovie,
                     onGetPopularTv = {
-                        viewModel.getPopularTv()
+
                     },
                     onSelectType = 0
                 )

@@ -9,8 +9,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.exorcise.core.utils.DateFormatter
-import com.exorcise.core.utils.TimeFormatter
+import com.exorcise.domain.utils.DateFormatter
+import com.exorcise.domain.utils.TimeFormatter
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.exorcise.movie.ui.theme.TrendytTheme
 

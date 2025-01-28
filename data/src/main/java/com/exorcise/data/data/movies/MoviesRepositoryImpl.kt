@@ -45,23 +45,6 @@ class MoviesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun fetchPopularTv(page: Int): Result<List<MovieSummary>> {
-        return fetchWithConfiguration { apiConfiguration ->
-            Result.success(
-                moviesRemoteDataSource.getPopularTv(page).getOrElse { error ->
-                    return@fetchWithConfiguration Result.failure(error)
-                }.popularMovies.map { movie ->
-                    MovieSummary(
-                        id = movie.id,
-                        title = movie.name,
-                        rating = movie.popularity.toFloat(),
-                        releaseDate = movie.firstAirDate,
-                        imageUrl = apiConfiguration.urlForBackdrop(movie.backdropPath)
-                    )
-                }
-            )
-        }
-    }
 
     override suspend fun fetchMovieDetails(id: Int): Result<MovieDetails> {
         return fetchWithConfiguration {

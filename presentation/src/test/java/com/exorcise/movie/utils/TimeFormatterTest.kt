@@ -1,6 +1,6 @@
 package com.exorcise.movie.utils
 
-import com.exorcise.core.utils.TimeFormatter
+import com.exorcise.domain.utils.TimeFormatter
 import org.junit.Assert
 import org.junit.Test
 

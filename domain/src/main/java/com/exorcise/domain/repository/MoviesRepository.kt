@@ -7,7 +7,6 @@ import com.exorcise.domain.model.TypeMovieOrder
 
 interface MoviesRepository {
     suspend fun fetchPopularMovies(page: Int,type: TypeMovieOrder): Result<List<MovieSummary>>
-    suspend fun fetchPopularTv(page: Int): Result<List<MovieSummary>>
 
     suspend fun fetchMovieDetails(id: Int): Result<MovieDetails>
     suspend fun fetchLocal(): Result<List<MovieSummary>>

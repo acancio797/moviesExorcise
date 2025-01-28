@@ -57,20 +57,6 @@ class MovieViewModel @Inject constructor(private val moviesRepo: MoviesRepositor
         }
     }
 
-    fun getPopularTv() {
-        viewModelState.update { it.copy(isRefreshing = true, errorMessages = emptyList()) }
-        viewModelScope.launch {
-            val result = moviesRepo.fetchPopularTv(1)
-            viewModelState.update { state ->
-                val feed = result.getOrElse { throwable ->
-                    val errorMessages = state.errorMessages + (throwable.message ?: "")
-                    return@update state.copy(errorMessages = errorMessages, isRefreshing = false)
-                }
-
-                state.copy(moviesFeed = feed, isRefreshing = false, errorMessages = emptyList())
-            }
-        }
-    }
 }
 
 sealed interface MovieUiState {
